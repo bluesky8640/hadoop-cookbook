@@ -39,13 +39,16 @@ Hadoop cluster attributes
 Usage
 =====
 
-Export your chef repository
-	export CHEF_REPO=/etc/chef-server/chef-repo
+Export your chef repository:
 
-Install Librarian
+	export CHEF_REPO=/path/to/your/chef-repo
+
+Install Librarian:
+
 	gem install spiceweasel librarian
 
-Go to your CHEF_REPO parent directory and initilize Cheffile file
+Go to your CHEF_REPO parent directory and initilize Cheffile file:
+
 	librarian-chef init
 	echo -e "cookbook 'java',\n\t:git => 'https://github.com/opscode-cookbooks/java'\n" >> Cheffile
 	echo -e "cookbook 'ufw',\n\t:git => 'https://github.com/opscode-cookbooks/ufw'\n" >> Cheffile
@@ -53,12 +56,14 @@ Go to your CHEF_REPO parent directory and initilize Cheffile file
 	librarian-chef update
 
 Create the Hadoop default role. This role will be used to tag each server within Hadoop cluster.
+
 	cat << EOF > $CHEF_REPO/roles/hadoop.rb
 	name "hadoop"
 	description "Hadoop default role"
 	EOF
 
-Create a role to set the ssh public key for hadoop user
+Create a role to set the ssh public key for hadoop user:
+
 	cat << EOF > $CHEF_REPO/roles/ssh-pub-key.rb
 	name "ssh-pub-key"
 	description "Update ssh_keys databag with node pub key"
@@ -67,7 +72,8 @@ Create a role to set the ssh public key for hadoop user
 	]
 	EOF
 
-Create a role to store the hadoop user public key in authorized_keys file
+Create a role to store the hadoop user public key in authorized_keys file:
+
 	cat << EOF > $CHEF_REPO/roles/ssh-authorized-key.rb
 	name "ssh-authorized-key"
 	description "Update authorized keys on all nodes"
@@ -76,7 +82,8 @@ Create a role to store the hadoop user public key in authorized_keys file
 	]
 	EOF
 
-Create a role to setup hosts file
+Create a role to setup hosts file:
+
 	cat << EOF > $CHEF_REPO/roles/setup-hosts.rb
 	name "setup-hosts"
 	description "Setup /etc/hosts file on all nodes"
@@ -85,7 +92,8 @@ Create a role to setup hosts file
 	]
 	EOF
 
-Create a role to setup Hadoop Framework
+Create a role to setup Hadoop Framework:
+
 	cat << EOF > $CHEF_REPO/roles/setup-hadoop.rb
 	name "setup-hadoop"
 	description "Setup Hadoop package on all nodes"
@@ -94,14 +102,15 @@ Create a role to setup Hadoop Framework
 	]
 	override_attributes "firewall" => {
 	                "rules" => [
-				{ "data_node_communication"	=> {"port" => "50010"}},
-	                        { "task_tracker_admin"  => {"port" => "50060"}},
-	                        { "data_node_admin" => {"port" => "50075"}}
+	                	{ "data_node_communication"	=> {"port" => "50010"}},
+	                	{ "task_tracker_admin"  => {"port" => "50060"}},
+	                	{ "data_node_admin" => {"port" => "50075"}}
 	                ]
 	}
 	EOF
 
-Create a role to setup the master server. JobTracker and Namenode will run on this server
+Create a role to setup the master server. JobTracker and Namenode will run on this server.
+
 	cat << EOF > $CHEF_REPO/roles/setup-master.rb
 	name "setup-master"
 	description "Setup Hadoop master node"
@@ -110,16 +119,17 @@ Create a role to setup the master server. JobTracker and Namenode will run on th
 	]
 	override_attributes "firewall" => {
 	                "rules" => [
-	                        { "job_tracker_ui"  => {"port" => "50030"}},
-				{ "name_node_ui"  => {"port" => "50070"}},
-				{ "name_node_communication"	=> {"port" => "54310"}},
-	                        { "job_tracker_communication" => {"port" => "54311"}}
+	                	{ "job_tracker_ui"  => {"port" => "50030"}},
+	                	{ "name_node_ui"  => {"port" => "50070"}},
+	                	{ "name_node_communication"	=> {"port" => "54310"}},
+	                	{ "job_tracker_communication" => {"port" => "54311"}}
 	                ]
 	}
 	
 	EOF
 
 Java must be installed on all servers. This cookbook requires java which can be installed by the role below:
+
 	cat << EOF > $CHEF_REPO/roles/java.rb
 	name "java"
 	description "Setup Java packages"
@@ -133,6 +143,7 @@ Java must be installed on all servers. This cookbook requires java which can be 
 
 
 Upload all roles
+
 	knife role from file java.rb
 	knife role from file hadoop.rb
 	knife role from file ssh-pub-key.rb
@@ -142,20 +153,24 @@ Upload all roles
 	knife role from file setup-master.rb
 
 Upload hadoop cookbook
+
 	knife cookbook upload hadoop
 
 Example
 ======
 
 1) Boostrap all servers with the following roles:
+
 	knife bootstrap <IP> -N <node_name> -x root -P <password> -r 'role[hadoop],role[java],role[ssh-pub-key]'
 
 
 2) Remove `java` and `ssh-pub-key` roles from all servers:
+
 	knife node run_list remove <node_name> 'role[java],role[ssh-pub-key]'
 
 
 3) Add roles `ssh-authorized-key`, `setup-hosts` and `setup-hadoop` on all servers:
+
 	knife node run_list add <node_name> 'role[ssh-authorized-key],role[setup-hosts],role[setup-hadoop]'
 
 
@@ -163,9 +178,11 @@ Example
 
 
 5) Remove `ssh-authorized-key`, `setup-hosts` and `setup-hadoop` roles from all servers:
+
 	knife node run_list remove <node_name> 'role[ssh-authorized-key],role[setup-hosts],role[setup-hadoop]'
 
 6) Add `setup-master` role only on the server that will run JobTracker and NameNode:
+
 	knife node run_list add <node_name> 'role[setup-master]'
 
 
@@ -173,6 +190,7 @@ Example
 
 
 8) Go to `node[hadoop_home]/node['hadoop_release']` directory and startup NameNode and JobTracker services:
+
 	bin/start-dfs.sh
 	bin/start-mapred.sh
 
