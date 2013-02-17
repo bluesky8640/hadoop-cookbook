@@ -26,8 +26,8 @@ default['public_key'] = ''
 # Hadoop default cluster role
 default['hadoop_cluster_role'] = 'hadoop'
 
-# Master hadoop node
-default['hadoop_master'] = 'c-01'
+# Master hadoop node.
+default['hadoop_master'] = ''
 
 # Hadoop replication factor
 default['hdfs_replication'] = 2
