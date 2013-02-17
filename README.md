@@ -55,11 +55,17 @@ Go to your CHEF_REPO parent directory and initilize Cheffile file:
 	echo -e "cookbook 'hadoop',\n\t:git => 'https://github.com/baremetalcloud/hadoop-cookbook'\n" >> Cheffile
 	librarian-chef update
 
-Create the Hadoop default role. This role will be used to tag each server within Hadoop cluster.
+Create the Hadoop default role. This role will be used to tag each server within Hadoop cluster. 
+Remember to update `hadoop_master` attribute so it represents the master server.
 
 	cat << EOF > $CHEF_REPO/roles/hadoop.rb
 	name "hadoop"
 	description "Hadoop default role"
+	
+	override_attributes "hadoop" => {
+		"hadoop_master" => "<node_client>"
+	}
+	
 	EOF
 
 Create a role to set the ssh public key for hadoop user:
