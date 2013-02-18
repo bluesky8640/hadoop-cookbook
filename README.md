@@ -45,7 +45,7 @@ Export your chef repository:
 
 Install Librarian:
 
-	gem install spiceweasel librarian
+	gem install librarian
 
 Go to your CHEF_REPO parent directory and initilize Cheffile file:
 
