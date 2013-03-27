@@ -159,6 +159,7 @@ Upload all roles
 	knife role from file setup-master.rb
 
 Upload all cookbooks
+
 	knife cookbook upload chef_handler
 	knife cookbook upload windows
 	knife cookbook upload java
