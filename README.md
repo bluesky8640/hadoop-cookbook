@@ -197,7 +197,7 @@ Example
 	knife node run_list add <node_name> 'role[setup-master]'
 
 
-7) Run `chef-client` on all servers.
+7) Run `chef-client` on the master server.
 
 
 8) Go to `node[hadoop_home]/node['hadoop_release']` directory and startup NameNode and JobTracker services:
