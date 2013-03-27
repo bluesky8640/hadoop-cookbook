@@ -158,8 +158,12 @@ Upload all roles
 	knife role from file setup-hadoop.rb
 	knife role from file setup-master.rb
 
-Upload hadoop cookbook
-
+Upload all cookbooks
+	knife cookbook upload chef_handler
+	knife cookbook upload windows
+	knife cookbook upload java
+	knife cookbook upload firewall
+	knife cookbook upload ufw
 	knife cookbook upload hadoop
 
 Example
