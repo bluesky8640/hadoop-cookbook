@@ -1,4 +1,4 @@
-Description
+Description (Modified by JinChao)
 ===========
 
 Installs and configures a basic Hadoop cluster on a set of servers. By default, HDFS and MapReduce services must be manually started.
