@@ -6,7 +6,8 @@
 require 'chef/shell_out'
 
 #Search all nodes within Hadoop Cluster
-nodes = search(:node, "role:#{node['hadoop_cluster_role']}").sort_by { |h| h[:hostname] }
+#nodes = search(:node, "role:#{node['hadoop_cluster_role']}").sort_by { |h| h[:hostname] }
+nodes = search(:node, "name:saasslaver1").sort_by { |h| h[:hostname] }
 
 # Update conf/masters
 log "Updating conf/masters with #{node['hadoop_master']}"

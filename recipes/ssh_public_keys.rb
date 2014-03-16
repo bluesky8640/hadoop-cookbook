@@ -9,8 +9,8 @@ require 'chef/shell_out'
 ##
 ## Generating User's password
 ##
-password = Mixlib::ShellOut.new("mkpasswd -m sha-512 #{node['hadoop_user_password']}")
-password.run_command
+# password = Mixlib::ShellOut.new("mkpasswd -m sha-512 #{node['hadoop_user_password']}")
+# password.run_command
 
 
 ##
@@ -22,7 +22,8 @@ user node['hadoop_user'] do
         comment "Hadoop user"
         home node['hadoop_user_home']
         shell "/bin/bash"
-        password password.stdout.chomp
+        # password password.stdout.chomp
+	password node['hadoop_user_password']
 	action :create
 end
 

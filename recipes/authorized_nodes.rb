@@ -10,7 +10,8 @@ require 'chef/shell_out'
 authorized_keys = ''
 
 # Search all nodes within the cluster
-nodes = search(:node, "role:#{node['hadoop_cluster_role']}")
+# nodes = search(:node, "role:#{node['hadoop_cluster_role']}")
+nodes = search(:node, "name:saasslaver1")
 
 # Collect nodes' public keys
 nodes.each do |node|

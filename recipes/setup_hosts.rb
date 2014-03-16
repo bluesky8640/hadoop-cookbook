@@ -12,7 +12,8 @@ backup_hosts.run_command
 log "File /etc/hosts backed up"
 
 #Search all nodes within Hadoop Cluster
-nodes = search(:node, "role:#{node['hadoop_cluster_role']}")
+#nodes = search(:node, "role:#{node['hadoop_cluster_role']}")
+nodes = search(:node, "name:saasslaver1")
 
 # Update /etc/hosts
 template "/etc/hosts" do

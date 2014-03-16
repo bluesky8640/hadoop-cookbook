@@ -36,8 +36,10 @@ download_hadoop.run_command
 
 # Extract Hadoop package
 log "Extracting Hadoop"
-download_hadoop = Mixlib::ShellOut.new("tar -xzf #{node['hadoop_release']}.tar.gz -C #{node['hadoop_home']}", :user => node['hadoop_user'], :group => node['hadoop_user'], :cwd => '/tmp')
-download_hadoop.run_command
+# download_hadoop = Mixlib::ShellOut.new("tar -xzf #{node['hadoop_release']}.tar.gz -C #{node['hadoop_home']}", :user => node['hadoop_user'], :group => node['hadoop_user'], :cwd => '/tmp')
+extract_hadoop = Mixlib::ShellOut.new("tar -xzf #{node['hadoop_release']}.tar.gz -C #{node['hadoop_home']}", :user => node['hadoop_user'], :group => node['hadoop_user'], :cwd => '/tmp')
+# download_hadoop.run_command
+extract_hadoop.run_command
 
 
 # Setup configuration files
