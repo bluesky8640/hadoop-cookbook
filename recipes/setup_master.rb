@@ -7,7 +7,9 @@ require 'chef/shell_out'
 
 #Search all nodes within Hadoop Cluster
 #nodes = search(:node, "role:#{node['hadoop_cluster_role']}").sort_by { |h| h[:hostname] }
-nodes = search(:node, "name:saasslaver1").sort_by { |h| h[:hostname] }
+nodes = search(:node, "name:*#{node['cluster_name']}*").sort_by { |h| h[:hostname] }
+nodes.delete_if { |h| h[:hostname] == node[:hostname] }
+log "Delete Master from nodes"
 
 # Update conf/masters
 log "Updating conf/masters with #{node['hadoop_master']}"
@@ -61,4 +63,15 @@ else
 	end
 end
 
+# Start Hadoop
+log "Start Hadoop"
+start_hadoop = Mixlib::ShellOut.new("bin/start-all.sh", :user => node['hadoop_user'], :cwd => "#{node['hadoop_home']}/#{node['hadoop_release']}")
+start_hadoop.run_command
 
+if !(start_hadoop.error!)
+ 	log "Start hadoop successfully!"
+else
+ 	log "Start hadoop failed!" do
+		level :warn
+	end
+end

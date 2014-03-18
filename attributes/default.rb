@@ -53,3 +53,9 @@ default['hadoop_datanode_dir'] = '/hadoop/dfs/dn'
 default['hadoop_tasktracker_local_dir'] = '/hadoop/mapred/jt'
 
 
+##
+## Cluster attributes
+##
+
+# Cluster Name
+default['cluster_name'] = ''

@@ -10,7 +10,8 @@ require 'chef/shell_out'
 ## Generating User's password
 ##
 # password = Mixlib::ShellOut.new("mkpasswd -m sha-512 #{node['hadoop_user_password']}")
-# password.run_command
+password = Mixlib::ShellOut.new("openssl passwd -1 #{node['hadoop_user_password']}")
+password.run_command
 
 
 ##
@@ -22,8 +23,7 @@ user node['hadoop_user'] do
         comment "Hadoop user"
         home node['hadoop_user_home']
         shell "/bin/bash"
-        # password password.stdout.chomp
-	password node['hadoop_user_password']
+        password password.stdout.chomp
 	action :create
 end
 
@@ -53,9 +53,11 @@ end
 #end
 
 
+# Generate SSH keys
 gen_ssh_keys = Mixlib::ShellOut.new('ssh-keygen -f id_rsa -N "" -t rsa', :cwd => "/tmp")
 gen_ssh_keys.run_command
 
+# Share SSH public key
 log "Sharing node's public key"
 get_pub_key = Mixlib::ShellOut.new('cat', 'id_rsa.pub', :cwd => "/tmp")
 get_pub_key.run_command
@@ -67,11 +69,11 @@ else
 		level :warn
 	end
 end
-
 # Set node public key
 node.set["public_key"] = get_pub_key.stdout
 log "public_key attribute updated"
 
+# Move SSH keys to hadoop workspace
 bash "Moving keys to hadoop user's home" do
        user    "root"
        group   "root"

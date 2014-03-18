@@ -5,6 +5,13 @@
 #
 require 'chef/shell_out'
 
+
+# Hadoop Master for this cluster
+hostname_elements = (node[:hostname]).split("-")
+node.set['hadoop_master'] = hostname_elements[0] + "-" + hostname_elements[1] + "-" + hostname_elements[2] + "-" + "1" 
+log "Hadoop Master: #{node['hadoop_master']}"
+
+
 # Find out JAVA_HOME
 log "Searching for JAVA_HOME"
 find_java_home = Mixlib::ShellOut.new("find / -name jps -type f  | grep bin")
