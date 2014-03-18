@@ -13,6 +13,7 @@ recipe "hadoop::authorized_nodes", "Configure ssh verification"
 recipe "hadoop::setup_hosts", "Setup /etc/hosts"
 recipe "hadoop::setup_hadoop", "Install Hadoop"
 recipe "hadoop::setup_master", "Configure Master"
+recipe "hadoop::start_hadoop", "Start Hadoop"
 
 %w{ ubuntu }.each do |os|
   supports os

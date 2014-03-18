@@ -63,15 +63,18 @@ else
 	end
 end
 
-# Start Hadoop
-log "Start Hadoop"
-start_hadoop = Mixlib::ShellOut.new("bin/start-all.sh", :user => node['hadoop_user'], :cwd => "#{node['hadoop_home']}/#{node['hadoop_release']}")
-start_hadoop.run_command
+# Set SSH Config
+log "Setting SSH Config"
+set_ssh_config =  Mixlib::ShellOut.new("sed -i \"s:#.*StrictHostKeyChecking.*$:StrictHostKeyChecking no:g\" ssh_config", :cwd => "/etc/ssh", :user => "root", :group => "root")
+set_ssh_config.run_command
 
-if !(start_hadoop.error!)
- 	log "Start hadoop successfully!"
+if !(set_ssh_config.error!)
+        log "SSH Config was successfully set"
 else
- 	log "Start hadoop failed!" do
-		level :warn
-	end
+        log "SSH Config was not set"
+end
+
+# Restart SSH Server
+service "ssh" do
+	action :restart
 end
