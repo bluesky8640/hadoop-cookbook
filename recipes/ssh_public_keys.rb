@@ -27,6 +27,7 @@ user node['hadoop_user'] do
 	action :create
 end
 
+
 ##
 ## Create .ssh directory under Hadoop user's home
 ##
