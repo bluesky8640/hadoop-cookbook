@@ -34,7 +34,7 @@ default['hdfs_replication'] = 2
 
 # Hadoop package URI
 # default['hadoop_package_uri'] = 'http://www.us.apache.org/dist/hadoop/common/hadoop-1.0.4/hadoop-1.0.4.tar.gz'
-default['hadoop_package_uri'] = 'http://apache.mirrors.hoobly.com/hadoop/common/hadoop-1.2.1/hadoop-1.2.1.tar.gz'
+default['hadoop_package_uri'] = 'ftp://saasslave04/hadoop-1.2.1.tar.gz'
 
 # Hadoop package
 # default['hadoop_release'] = 'hadoop-1.0.4'
