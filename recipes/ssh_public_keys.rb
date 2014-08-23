@@ -10,22 +10,22 @@ require 'chef/shell_out'
 ## Generating User's password
 ##
 # password = Mixlib::ShellOut.new("mkpasswd -m sha-512 #{node['hadoop_user_password']}")
-password = Mixlib::ShellOut.new("openssl passwd -1 #{node['hadoop_user_password']}")
-password.run_command
+#password = Mixlib::ShellOut.new("openssl passwd -1 #{node['hadoop_user_password']}")
+#password.run_command
 
 
 ##
 ## Create hadoop user
 ##
-log "Creating Hadoop user: #{node['hadoop_user']}"
-user node['hadoop_user'] do
-        supports :manage_home => true
-        comment "Hadoop user"
-        home node['hadoop_user_home']
-        shell "/bin/bash"
-        password password.stdout.chomp
-	action :create
-end
+#log "Creating Hadoop user: #{node['hadoop_user']}"
+#user node['hadoop_user'] do
+#        supports :manage_home => true
+#        comment "Hadoop user"
+#        home node['hadoop_user_home']
+#        shell "/bin/bash"
+#        password password.stdout.chomp
+#	action :create
+#end
 
 
 ##
@@ -55,7 +55,7 @@ end
 
 
 # Generate SSH keys
-gen_ssh_keys = Mixlib::ShellOut.new('ssh-keygen -f id_rsa -N "" -t rsa', :cwd => "/tmp")
+gen_ssh_keys = Mixlib::ShellOut.new('ssh-keygen -f id_rsa -N "" -t rsa', :cwd => "/tmp", :user => node['hadoop_user'], :group => node['hadoop'])
 gen_ssh_keys.run_command
 
 # Share SSH public key

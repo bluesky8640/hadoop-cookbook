@@ -25,5 +25,3 @@ template "/etc/hosts" do
     :hosts => nodes.sort_by { |h| h[:hostname] }
   )
 end
-
-

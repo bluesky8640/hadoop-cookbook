@@ -14,7 +14,7 @@ log "Hadoop Master: #{node['hadoop_master']}"
 
 # Find out JAVA_HOME
 log "Searching for JAVA_HOME"
-find_java_home = Mixlib::ShellOut.new("find / -name jps -type f  | grep bin")
+find_java_home = Mixlib::ShellOut.new("find / -name jps -type f | grep bin")
 find_java_home.run_command
 
 if !(find_java_home.error!)
@@ -22,8 +22,8 @@ if !(find_java_home.error!)
         log "JAVA_HOME found in #{java_home}"
 else
         log "JAVA_HOME not found" do
-		level :warn
-	end
+			level :warn
+		end
 end
 
 # Create Hadoop home directory

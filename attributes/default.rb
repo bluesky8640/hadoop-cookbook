@@ -7,10 +7,11 @@
 ##
 
 # Hadoop user
-default['hadoop_user'] = 'hadoop'
+# default['hadoop_user'] = 'hadoop'
+default['hadoop_user'] = 'jinchao'
 
 # Hadoop user's password
-default['hadoop_user_password'] = 'hadoop'
+# default['hadoop_user_password'] = 'hadoop'
 
 # Hadoop user's home directory
 default['hadoop_user_home'] = "/home/#{node['hadoop_user']}"

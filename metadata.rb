@@ -1,17 +1,17 @@
-name		 "hadoop"
+name			 "hadoop"
 maintainer       "BUAA, Org."
 maintainer_email "bluesky8640@126.com"
 license          "All rights reserved"
 description      "Installs/Configures hadoop"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.1"
-depends		 "java"
+depends		     "java"
 
 recipe "hadoop::default", "Include java"
 recipe "hadoop::ssh_public_keys", "Generate ssh public keys"
 recipe "hadoop::authorized_nodes", "Configure ssh verification" 
 recipe "hadoop::setup_hosts", "Setup /etc/hosts"
-recipe "hadoop::setup_hadoop", "Install Hadoop"
+recipe "hadoop::setup_hadoop", "Common Configuration"
 recipe "hadoop::setup_master", "Configure Master"
 recipe "hadoop::start_hadoop", "Start Hadoop"
 
