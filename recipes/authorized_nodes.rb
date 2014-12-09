@@ -18,8 +18,12 @@ authorized_keys = ''
 # nodes = search(:node, "role:#{node['hadoop_cluster_role']}")
 nodes = search(:node, "name:*#{node['cluster_name']}*").sort_by { |h| h[:hostname] }
 
+# Log current node's hostname
+log "This node's hostname: #{node[:hostname]}"
+
 # Collect nodes' public keys
 nodes.each do |node|
+	log "current hostname: #{node[:hostname]}"
 	authorized_keys << node['public_key']	
 end
 

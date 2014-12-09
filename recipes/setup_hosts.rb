@@ -11,6 +11,9 @@ backup_hosts.run_command
 
 log "File /etc/hosts backed up"
 
+# Log node's hostname
+log "Current node's hostname: #{node[:hostname]}"
+
 #Search all nodes within Hadoop Cluster
 #nodes = search(:node, "role:#{node['hadoop_cluster_role']}")
 nodes = search(:node, "name:*#{node['cluster_name']}*")
